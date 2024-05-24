@@ -75,6 +75,12 @@ const eth: NetworkUserConfig = {
   accounts: [process.env.KEY_ETH!],
 }
 
+const PuerHub: NetworkUserConfig = {
+  url: 'https://rpc.puerhub.com',
+  chainId: 526,
+  accounts: [process.env.KEY_PUERHUB!],
+}
+
 export default {
   networks: {
     hardhat: {
@@ -84,10 +90,23 @@ export default {
     ...(process.env.KEY_MAINNET && { bscMainnet }),
     ...(process.env.KEY_GOERLI && { goerli }),
     ...(process.env.KEY_ETH && { eth }),
+    ...(process.env.KEY_PUERHUB && { PuerHub }),
     // mainnet: bscMainnet,
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY || '',
+    apiKey: {
+      PuerHub: 'abc',
+    },
+    customChains: [
+      {
+        network: "PuerHub",
+        chainId: 526,
+        urls: {
+          apiURL: "https://bc.puerhub.com/api",
+          browserURL: "https://bc.puerhub.com",
+        }
+      }
+    ]
   },
   solidity: {
     compilers: [DEFAULT_COMPILER_SETTINGS],

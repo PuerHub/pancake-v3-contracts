@@ -12,10 +12,17 @@ async function main() {
   const deployedContracts_masterchef_v3 = await import(`@pancakeswap/masterchef-v3/deployments/${networkName}.json`);
   const deployedContracts_v3_periphery = await import(`@pancakeswap/v3-periphery/deployments/${networkName}.json`);
 
+  const cakeDeployedContracts = await import(`@pancakeswap/cake/deployments/${networkName}.json`);
+
   // Verify masterChefV3
   console.log("Verify masterChefV3");
+  // await verifyContract(deployedContracts_masterchef_v3.MasterChefV3, [
+  //   config.cake,
+  //   deployedContracts_v3_periphery.NonfungiblePositionManager,
+  //   config.WNATIVE,
+  // ]);
   await verifyContract(deployedContracts_masterchef_v3.MasterChefV3, [
-    config.cake,
+    cakeDeployedContracts.Tea,
     deployedContracts_v3_periphery.NonfungiblePositionManager,
     config.WNATIVE,
   ]);

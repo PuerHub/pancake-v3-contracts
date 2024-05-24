@@ -1,0 +1,14 @@
+{
+  "name": "@pancakeswap/cake",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.0.7",
+    "@nomiclabs/hardhat-ethers": "^2.2.2",
+    "@layerzerolabs/solidity-examples": "0.0.13",
+    "@openzeppelin/contracts": "4.9.6",
+    "dotenv": "^8.2.0",
+    "find-config": "^1.0.0",
+    "hardhat": "^2.13.0"
+  }
+}

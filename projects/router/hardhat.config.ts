@@ -6,7 +6,7 @@ import 'hardhat-abi-exporter'
 import 'hardhat-contract-sizer'
 import 'dotenv/config'
 import 'hardhat-tracer'
-import '@nomiclabs/hardhat-etherscan'
+import '@nomicfoundation/hardhat-verify'
 import 'solidity-docgen'
 require('dotenv').config({ path: require('find-config')('.env') })
 
@@ -52,6 +52,12 @@ const eth: NetworkUserConfig = {
   accounts: [process.env.KEY_ETH!],
 }
 
+const PuerHub: NetworkUserConfig = {
+  url: 'https://rpc.puerhub.com',
+  chainId: 526,
+  accounts: [process.env.KEY_PUERHUB!],
+}
+
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   networks: {
@@ -64,11 +70,24 @@ const config: HardhatUserConfig = {
     ...(process.env.KEY_MAINNET && { bscMainnet }),
     ...(process.env.KEY_GOERLI && { goerli }),
     ...(process.env.KEY_ETH && { eth }),
+    ...(process.env.KEY_PUERHUB && { PuerHub }),
     // goerli: goerli,
     // mainnet: bscMainnet,
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY || '',
+    apiKey: {
+      PuerHub: 'abc',
+    },
+    customChains: [
+      {
+        network: "PuerHub",
+        chainId: 526,
+        urls: {
+          apiURL: "https://bc.puerhub.com/api",
+          browserURL: "https://bc.puerhub.com",
+        }
+      }
+    ]
   },
   solidity: {
     compilers: [

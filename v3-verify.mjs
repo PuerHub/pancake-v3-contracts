@@ -7,6 +7,7 @@ const networks = {
   bscMainnet: 'bscMainnet',
   bscTestnet: 'bscTestnet',
   hardhat: 'hardhat',
+  PuerHub: 'PuerHub',
 }
 
 let network = process.env.NETWORK
@@ -14,6 +15,10 @@ console.log(network, 'network')
 if (!network || !networks[network]) {
   throw new Error(`env NETWORK: ${network}`)
 }
+
+await $`yarn workspace @pancakeswap/endpoint run hardhat run scripts/verify.ts --network ${network}`
+
+await $`yarn workspace @pancakeswap/cake run hardhat run scripts/verify.ts --network ${network}`
 
 await $`yarn workspace @pancakeswap/v3-core run hardhat run scripts/verify.ts --network ${network}`
 

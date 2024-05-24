@@ -7,6 +7,7 @@ const networks = {
   bscMainnet: 'bscMainnet',
   bscTestnet: 'bscTestnet',
   hardhat: 'hardhat',
+  PuerHub: 'PuerHub',
 }
 
 let network = process.env.NETWORK
@@ -14,6 +15,10 @@ console.log(network, 'network')
 if (!network || !networks[network]) {
   throw new Error(`env NETWORK: ${network}`)
 }
+
+await $`yarn workspace @pancakeswap/endpoint run hardhat run scripts/deploy.ts --network ${network}`
+
+await $`yarn workspace @pancakeswap/cake run hardhat run scripts/deploy.ts --network ${network}`
 
 await $`yarn workspace @pancakeswap/v3-core run hardhat run scripts/deploy.ts --network ${network}`
 
@@ -27,6 +32,8 @@ await $`yarn workspace @pancakeswap/v3-lm-pool run hardhat run scripts/deploy2.t
 
 console.log(chalk.blue('Done!'))
 
+const e = await fs.readJson(`./projects/endpoint/deployments/${network}.json`)
+const t = await fs.readJson(`./projects/cake/deployments/${network}.json`)
 const m = await fs.readJson(`./projects/masterchef-v3/deployments/${network}.json`)
 const r = await fs.readJson(`./projects/router/deployments/${network}.json`)
 const c = await fs.readJson(`./projects/v3-core/deployments/${network}.json`)
@@ -34,6 +41,8 @@ const p = await fs.readJson(`./projects/v3-periphery/deployments/${network}.json
 const l = await fs.readJson(`./projects/v3-lm-pool/deployments/${network}.json`)
 
 const addresses = {
+  ...e,
+  ...t,
   ...m,
   ...r,
   ...c,
